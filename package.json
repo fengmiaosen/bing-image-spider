@@ -1,17 +1,19 @@
 {
   "name": "bing-image-spider",
   "version": "1.0.0",
-  "description": "×¥È¡bingËÑË÷Ê×Ò³±³¾°´óÍ¼",
+  "description": "×¥È¡bingï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "node server.js"
+    "start": "node index.js"
   },
   "author": "fengmiaosen <fengmiaosen@gmail.com> (https://fengmiaosen.github.io/)",
   "license": "ISC",
   "dependencies": {
     "async": "^2.1.4",
     "cheerio": "^0.22.0",
-    "superagent": "^3.0.0"
+    "express": "^4.14.0",
+    "superagent": "^3.0.0",
+    "thenjs": "^2.0.4"
   }
 }
