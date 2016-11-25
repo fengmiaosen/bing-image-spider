@@ -1,0 +1,17 @@
+{
+  "name": "bing-image-spider",
+  "version": "1.0.0",
+  "description": "抓取bing搜索首页背景大图",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"start": "node server.js"
+  },
+  "author": "fengmiaosen <fengmiaosen@gmail.com> (https://fengmiaosen.github.io/)",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.1.4",
+    "cheerio": "^0.22.0",
+    "superagent": "^3.0.0"
+  }
+}
