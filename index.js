@@ -3,12 +3,13 @@ let thenjs = require('thenjs');
 let phantom = require('phantom');
 let parse_content = require('./util/parse_content');
 let fetchImg = require('./util/fetch_img');
-let _ph, _page, _outObj;
 
 const cnUrl = 'http://cn.bing.com/';
 const globalUrl = 'http://global.bing.com/';
 const urlList = [cnUrl, globalUrl];
 const url = cnUrl;
+
+let _ph, _page, _outObj;
 
 phantom.create().then(ph => {
     _ph = ph;
@@ -28,4 +29,6 @@ phantom.create().then(ph => {
 
     _page.close();
     _ph.exit();
-}).catch(e => console.log('error', e));
+}).catch(e => {
+    console.log('error', e);
+});

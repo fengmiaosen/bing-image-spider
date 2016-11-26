@@ -13,17 +13,25 @@ const pathObj = path.parse(__dirname);
 
 module.exports = {
     get(imgSrc) {
-        fetch(imgSrc).then(res => {
-            let extType = path.extname(imgSrc);
-            let time = moment().format("YYYY-MM-DD-HH");
-            let fileName = filePrefix + '_' + time + extType;
-            let filePath = path.join(pathObj.dir, temp, fileName);
 
-            console.log('path parse:', path.parse(__dirname));
-            console.log('path:', filePath);
+        if(!imgSrc){
+            return;
+        }
 
-            let dest = fs.createWriteStream(filePath);
-            res.body.pipe(dest);
+        fetch(imgSrc)
+            .then(res => {
+                let extType = path.extname(imgSrc);
+                let time = moment().format("YYYY-MM-DD-HH");
+                let fileName = filePrefix + '_' + time + extType;
+                let filePath = path.join(pathObj.dir, temp, fileName);
+
+                // console.log('path parse:', path.parse(__dirname));
+                // 写入到临时文件夹
+                let dest = fs.createWriteStream(filePath);
+                res.body.pipe(dest);
+
+            }).catch(err => {
+            console.log(err);
         });
     }
 };
