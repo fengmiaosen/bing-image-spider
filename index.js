@@ -1,39 +1,38 @@
 
-let superagent = require('superagent');
-let cheerio = require('cheerio');
-let thenjs = require('thenjs');
-let app = require('express');
+let parse_content = require('./util/parse_content');
+let phantom = require('phantom');
+let fetch = require('node-fetch');
+let fileType = require('file-type');
+let fs = require('fs');
 
-console.log('bing搜索首页大图爬虫开始运行...');
+let _ph, _page, _outObj;
+const url = 'http://cn.bing.com/';
 
-superagent
-    .get('http://cn.bing.com/')
-    .end((err, res) => {
+phantom.create().then(ph => {
+    _ph = ph;
+    return _ph.createPage();
+}).then(page => {
+    _page = page;
+    return _page.open(url);
+}).then(status => {
+    console.log('status:', status);
+    return _page.property('content')
+}).then(content => {
 
-        if(!res.text){
-            console.error('请求失败未返回数据');
-        }
+    if(!content){
+        console.log('content empty!')
+    }
 
-        // 获取爬虫页面内容
-        let $ = cheerio.load(res.text, {
-            decodeEntities: false
-        });
-        let headStyles = $('head style');
-        let bgDiv = $('#bgDiv');
+    // 网页内容解析匹配背景大图
+    let imgSrc = parse_content.get(content);
 
-        headStyles.map((index, style) => {
+    // 请求图片数据
+    fetch(imgSrc).then(function (res) {
+        let dest = fs.createWriteStream('./bing.jpg');
 
-            let styleText = $(style).text();
-
-            // console.log('head style=========' + index,styleText);
-            console.log('\n');
-
-            if(/\#bgDiv\{([\s\S]+)\}/gi.test(styleText)) {
-                console.log('bgDiv style>>>>>>>>', /\#bgDiv\{([\s\S]+)\}/gi.exec(styleText)[1]);
-                return;
-            }
-
-        });
-
-        // console.log('img url', bgDiv);
+        res.body.pipe(dest);
     });
+
+    _page.close();
+    _ph.exit();
+}).catch(e => console.log('error', e));

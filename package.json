@@ -1,7 +1,7 @@
 {
   "name": "bing-image-spider",
   "version": "1.0.0",
-  "description": "ץȡbing������ҳ������ͼ",
+  "description": "bing搜索",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,6 +13,9 @@
     "async": "^2.1.4",
     "cheerio": "^0.22.0",
     "express": "^4.14.0",
+    "file-type": "^3.9.0",
+    "node-fetch": "^1.6.3",
+    "phantom": "^3.1.0",
     "superagent": "^3.0.0",
     "thenjs": "^2.0.4"
   }
