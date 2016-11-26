@@ -1,12 +1,15 @@
 
-let parse_content = require('./util/parse_content');
+let thenjs = require('thenjs');
 let phantom = require('phantom');
-let fetch = require('node-fetch');
-let fileType = require('file-type');
-let fs = require('fs');
-
+let parse_content = require('./util/parse_content');
+let fetchImg = require('./util/fetch_img');
 let _ph, _page, _outObj;
-const url = 'http://cn.bing.com/';
+
+const cnUrl = 'http://cn.bing.com/';
+const globalUrl = 'http://global.bing.com/';
+const urlList = [cnUrl, globalUrl];
+let url = cnUrl;
+
 
 phantom.create().then(ph => {
     _ph = ph;
@@ -18,20 +21,11 @@ phantom.create().then(ph => {
     console.log('status:', status);
     return _page.property('content')
 }).then(content => {
-
-    if(!content){
-        console.log('content empty!')
-    }
-
     // 网页内容解析匹配背景大图
     let imgSrc = parse_content.get(content);
 
     // 请求图片数据
-    fetch(imgSrc).then(function (res) {
-        let dest = fs.createWriteStream('./bing.jpg');
-
-        res.body.pipe(dest);
-    });
+    fetchImg.get(imgSrc);
 
     _page.close();
     _ph.exit();
