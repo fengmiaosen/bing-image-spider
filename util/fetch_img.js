@@ -7,15 +7,16 @@ let path = require('path');
 let moment = require('moment');
 
 const source = 'cn';
-const filePrefix = 'bing';
+const filePrefix = source + '_bing';
+const temp = 'tmp';
 
 module.exports = {
     get(imgSrc) {
         fetch(imgSrc).then(res => {
             let extType = path.extname(imgSrc);
             let time = moment().format("YYYY-MM-DD-HH-mm");
-            let fileName = source + '_' + filePrefix + '_' + time + extType;
-            let filePath = path.join(path.basename(__dirname), fileName);
+            let fileName = filePrefix + '_' + time + extType;
+            let filePath = path.join(path.dirname(path.basename(__dirname)), temp, fileName);
 
             console.log('path:', filePath);
 

@@ -8,8 +8,7 @@ let _ph, _page, _outObj;
 const cnUrl = 'http://cn.bing.com/';
 const globalUrl = 'http://global.bing.com/';
 const urlList = [cnUrl, globalUrl];
-let url = cnUrl;
-
+const url = cnUrl;
 
 phantom.create().then(ph => {
     _ph = ph;
