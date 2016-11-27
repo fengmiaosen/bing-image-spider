@@ -3,12 +3,17 @@
  */
 const electron = require('electron');
 const path = require('path');
+const fs = require('fs');
 const url = require('url');
 const spider = require('./util/spider');
 
 const {app, BrowserWindow} = electron;
-const ipc = electron.ipcMain;
+const ipcMain = electron.ipcMain;
 const dialog = electron.dialog;
+const nativeImage = electron.nativeImage;
+
+const os = require('os');
+const homeDir = os.homedir();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -66,28 +71,54 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 // 监听渲染页面进程事件
+let imagePath = '';
 
 // 下载图片
-ipc.on('start-search-image', function (event) {
+ipcMain.on('start-search-image', (event) => {
     spider.start( data => {
         if(data.image) {
-            event.sender.send('search-image', data)
+            event.sender.send('search-image', data);
+
+            imagePath = data.filePath;
         }
     });
 });
 
+ipcMain.on('stop-search-image', (event) => {
+    spider.stop();
+    event.sender.send('stop-image', '')
+});
+
 // 保存图片到本地
-ipc.on('save-search-image', function (event, args) {
+ipcMain.on('save-search-image', (event, args) => {
     const options = {
         title: '保存图片',
+        buttonLabel: '保存图片',
         // 默认保存位置
-        // defaultPath: args.path,
+        defaultPath: homeDir,
         filters: [
-            {name: 'Images', extensions: ['jpg', 'png', 'gif']}
+            {name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif']}
         ]
     };
 
-    dialog.showSaveDialog(options, function (filename) {
-        event.sender.send('save-image', filename)
+    dialog.showSaveDialog(mainWindow, options, function (filename) {
+        let image = nativeImage.createFromPath(imagePath);
+        let imgData = image.toJPEG(90);
+
+        fs.writeFile(filename, imgData, "binary", (err) => {
+            if(err){
+                console.log("down fail");
+                event.sender.send('save-image', {
+                    error: 1,
+                    filename: filename
+                });
+            } else {
+                event.sender.send('save-image', {
+                    error: 0,
+                    filename: filename
+                });
+            }
+        });
+
     })
 });
