@@ -6,18 +6,16 @@ const electron = require('electron');
 const {ipcMain, dialog, nativeImage} = electron;
 const fs = require('fs');
 const os = require('os');
-const homeDir = os.homedir();
 const spider = require('../util/spider');
-
-let imagePath = '';
 const QUALITY = 100;
+let imagePath = '';
 
 // 保存图片
 var showSaveDialog = function (event, mainWindow) {
+    const homeDir = os.homedir();
     const options = {
         title: '保存图片',
         buttonLabel: '保存图片',
-        // 默认保存位置
         defaultPath: homeDir,
         filters: [{
             name: 'Images',
@@ -63,7 +61,7 @@ let setIpc = function (mainWindow) {
         event.sender.send('stop-image', '')
     });
 
-// 保存图片到本地
+    // 保存图片到本地
     ipcMain.on('save-search-image', (event, args) => {
         showSaveDialog(event, mainWindow);
     });

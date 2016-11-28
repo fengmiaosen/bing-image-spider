@@ -13,10 +13,6 @@ let _ph, _page, _outObj;
 function start(callback) {
     let phantomInst = phantom.create();
 
-    // phantomInst.exit();
-    // _page && _page.close();
-    // _ph && _ph.exit();
-
     phantomInst.then(ph => {
         _ph = ph;
         return _ph.createPage();
@@ -32,11 +28,10 @@ function start(callback) {
          fetchImg.get(content, callback);
 
          // 关闭页面进程
-        _page.close();
-        _ph.exit();
+        stop();
     }).catch(e => {
         console.log('error', e);
-        _ph.exit();
+        stop();
     });
 }
 
@@ -46,6 +41,5 @@ function stop() {
 }
 
 module.exports = {
-    start,
-    stop
+    start
 };
