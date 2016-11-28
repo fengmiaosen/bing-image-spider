@@ -50,7 +50,7 @@ let setIpc = function (mainWindow) {
     // 下载图片
     ipcMain.on('start-search-image', (event) => {
         spider.start( data => {
-            if(data.image) {
+            if(data.imageUrl) {
                 event.sender.send('search-image', data);
                 imagePath = data.filePath;
             }

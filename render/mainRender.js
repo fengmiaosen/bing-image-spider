@@ -55,9 +55,9 @@
             image.classList.remove('image-blur');
             saveBtn.classList.remove('disabled');
 
-            imageTip.innerHTML = data.image;
+            imageTip.innerHTML = data.imageUrl;
             imageFile = data.filePath;
-            image.src = data.image;
+            image.src = data.imageUrl;
         });
 
         // 关闭窗口

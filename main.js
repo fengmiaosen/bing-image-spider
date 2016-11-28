@@ -1,6 +1,8 @@
 /**
  * Created by fengmiaosen on 2016/11/27.
  */
+const argv = require('minimist')(process.argv.slice(2));
+
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
@@ -32,8 +34,11 @@ function createWindow () {
     }));
 
     mainWindow.maximize();
+
     // 打开网页开发工具
-    mainWindow.webContents.openDevTools();
+    if(process.env.NODE_ENV === 'dev'){
+        mainWindow.webContents.openDevTools();
+    }
 
     // 监听主进程窗口关闭事件
     mainWindow.on('closed', () => {

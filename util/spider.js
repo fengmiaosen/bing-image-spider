@@ -1,4 +1,3 @@
-
 const phantom = require('phantom');
 const fetchImg = require('./fetch_img');
 const cnUrl = 'http://cn.bing.com/';
@@ -21,13 +20,13 @@ function start(callback) {
         page.setting('userAgent', ua);
         return _page.open(url);
     }).then(status => {
-        console.log('status:', status);
+        // console.log('status:', status);
         return _page.property('content')
     }).then(content => {
         // 匹配并请求图片数据
-         fetchImg.get(content, callback);
+        fetchImg.get(content, callback);
 
-         // 关闭页面进程
+        // 关闭页面进程
         stop();
     }).catch(e => {
         console.log('error', e);

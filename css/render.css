@@ -1,0 +1,47 @@
+html, body {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+body {
+
+}
+h1 {
+	position: relative;
+	margin: 0 auto;
+	text-align: center;
+	padding: 10px 0;
+}
+
+.btn-box {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	margin: 10px 0;
+}
+.btn {
+	display: block;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
+.btn:nth-child(n+2) {
+	margin-left: 15px;
+}
+
+#bing_image {
+	display: block;
+	width: 100%;
+	height: 400px;
+	background: url(../img/wwh2.JPG) no-repeat center;
+	background-size: contain;
+}
+
+#bing_image.image-blur {
+	-webkit-filter:blur(3px);
+}
+
+.image-box {
+	padding: 10px;
+}

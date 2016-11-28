@@ -33,7 +33,7 @@ function get(content, callback) {
 
         //
         callback && callback({
-            image: imgSrc,
+            imageUrl: imgSrc,
             filePath: filePath
         });
     }).then(res => {
