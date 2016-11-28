@@ -22,11 +22,10 @@ let packagerConfig = {
     dir: config.build.outputRoot,
     out: config.build.releasesRoot,
     name: devManifest.name,
-    // version: getElectronVersion(),
+    version: getElectronVersion(),
     platform: argv.platform || config.release.platform,
     arch: argv.arch || 'all',
-    asar: false,
-    prune: false,
+    prune: true,
     overwrite: true,
     ignore: Object.keys({}).map((name) => {
         return '/node_modules/' + name + '($|/)'
