@@ -3,17 +3,10 @@
  */
 const electron = require('electron');
 const path = require('path');
-const fs = require('fs');
 const url = require('url');
-const spider = require('./util/spider');
 
 const {app, BrowserWindow} = electron;
-const ipcMain = electron.ipcMain;
-const dialog = electron.dialog;
-const nativeImage = electron.nativeImage;
-
-const os = require('os');
-const homeDir = os.homedir();
+const ipcMain = require('./main/ipcMain');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -21,29 +14,37 @@ let mainWindow = null;
 const winWidth = 1024, winHeight = 768;
 
 function createWindow () {
-    // Create the browser window.
     mainWindow = new BrowserWindow({
         width: winWidth,
-        height: winHeight
+        height: winHeight,
+        webPreferences: {
+            // Electron 的 Renderer 端因为注入了 Node 环境，存在全局函数 require，导致 jQuery 内部环境判断有问题！
+            // 如果不需要在网页里面使用 node模块（包括 electron 模块），可以将nodeIntegration 设置为 false。
+            // nodeIntegration: false
+        }
     });
 
-    // and load the index.html of the app.
+    // 加载app渲染页面
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file:',
         slashes: true
     }));
 
+    mainWindow.maximize();
     // 打开网页开发工具
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
-    // Emitted when the window is closed.
+    // 监听主进程窗口关闭事件
     mainWindow.on('closed', () => {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null
     });
+
+    // 注册主进程和渲染进程的交互事件
+    ipcMain.setIpc(mainWindow);
 }
 
 // This method will be called when Electron has finished
@@ -70,55 +71,3 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-// 监听渲染页面进程事件
-let imagePath = '';
-
-// 下载图片
-ipcMain.on('start-search-image', (event) => {
-    spider.start( data => {
-        if(data.image) {
-            event.sender.send('search-image', data);
-
-            imagePath = data.filePath;
-        }
-    });
-});
-
-ipcMain.on('stop-search-image', (event) => {
-    spider.stop();
-    event.sender.send('stop-image', '')
-});
-
-// 保存图片到本地
-ipcMain.on('save-search-image', (event, args) => {
-    const options = {
-        title: '保存图片',
-        buttonLabel: '保存图片',
-        // 默认保存位置
-        defaultPath: homeDir,
-        filters: [
-            {name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif']}
-        ]
-    };
-
-    dialog.showSaveDialog(mainWindow, options, function (filename) {
-        let image = nativeImage.createFromPath(imagePath);
-        let imgData = image.toJPEG(90);
-
-        fs.writeFile(filename, imgData, "binary", (err) => {
-            if(err){
-                console.log("down fail");
-                event.sender.send('save-image', {
-                    error: 1,
-                    filename: filename
-                });
-            } else {
-                event.sender.send('save-image', {
-                    error: 0,
-                    filename: filename
-                });
-            }
-        });
-
-    })
-});

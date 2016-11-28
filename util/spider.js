@@ -9,16 +9,20 @@ const url = cnUrl;
 const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36';
 
 let _ph, _page, _outObj;
-let phantomInst = phantom.create();
 
 function start(callback) {
+    let phantomInst = phantom.create();
+
+    // phantomInst.exit();
+    // _page && _page.close();
+    // _ph && _ph.exit();
+
     phantomInst.then(ph => {
         _ph = ph;
         return _ph.createPage();
     }).then(page => {
         _page = page;
         page.setting('userAgent', ua);
-
         return _page.open(url);
     }).then(status => {
         console.log('status:', status);
@@ -32,11 +36,13 @@ function start(callback) {
         _ph.exit();
     }).catch(e => {
         console.log('error', e);
+        _ph.exit();
     });
 }
 
 function stop() {
-    phantomInst.exit();
+    _page.close();
+    _ph.exit();
 }
 
 module.exports = {

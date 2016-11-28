@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "dev": "node spider_index.js"
+    "dev": "node spider_dev.js"
   },
   "author": "fengmiaosen <fengmiaosen@gmail.com> (https://fengmiaosen.github.io/)",
   "license": "ISC",
