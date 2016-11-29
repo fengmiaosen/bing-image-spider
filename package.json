@@ -1,7 +1,7 @@
 {
   "name": "bing-image-spider",
   "version": "1.0.0",
-  "description": "bing搜索",
+  "description": "bing搜索首页背景大图爬虫",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
