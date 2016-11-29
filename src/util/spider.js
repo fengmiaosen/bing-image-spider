@@ -17,7 +17,7 @@ function start(callback) {
         return _ph.createPage();
     }).then(page => {
         _page = page;
-        page.setting('userAgent', ua);
+        // page.setting('userAgent', ua);
         return _page.open(url);
     }).then(status => {
         // console.log('status:', status);

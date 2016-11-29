@@ -2,7 +2,7 @@
  * Created by fengmiaosen on 2016/11/26.
  */
 
-const reg = /g_img=\{\s*url:\s*"((http:)?\/\/[\w\d\.\/_-]+)",\s*id:\s*'bgDiv'/i;
+const reg = /\bg_img=\{\s*url:\s*"((http:)?\/\/[\w\d\.\/_-]+)",\s*id:\s*'bgDiv'/i;
 
 function get(content) {
 

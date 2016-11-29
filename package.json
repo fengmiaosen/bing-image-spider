@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=prod electron .",
     "dev": "cross-env  NODE_ENV=dev electron .",
-    "dev_spider": "node spider_dev.js",
+    "dev_spider": "cross-env node build/spider_dev.js",
     "package": "node build/package.js",
     "package:osx": "node build/package.js --platform=darwin --arch=x64",
     "package:win": "node build/package.js --platform=win32"

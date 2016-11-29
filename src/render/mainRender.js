@@ -27,6 +27,8 @@
     let bindDomEvent = function () {
         // 渲染页面dom事件监听并派发到主线程
         startBtn.addEventListener('click', function (event) {
+
+            initProcessBar();
             setProcessBar();
             startBtn.classList.add('disabled');
             image.classList.add('image-blur');
@@ -76,6 +78,12 @@
                 window.alert('image保存成功！' + args.filename);
             }
         });
+    };
+
+    let initProcessBar = function () {
+        fetched = false;
+        progressBar.style.width = '1%';
+        progressBar.innerHTML = '';
     };
 
     let setProcessBar = function () {
