@@ -1,0 +1,9 @@
+{
+  "name": "bing-image-spider",
+  "version": "0.0.1",
+  "description": "bing搜索首页背景大图抓取",
+  "main": "",
+  "dependencies": {},
+  "devDependencies": {},
+  "author": "fengmiaosen <fengmiaosen@gmail.com>"
+}

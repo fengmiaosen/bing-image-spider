@@ -11,7 +11,7 @@ const QUALITY = 100;
 let imagePath = '';
 
 // 保存图片
-var showSaveDialog = function (event, mainWindow) {
+let showSaveDialog = function (event, mainWindow) {
     const homeDir = os.homedir();
     const options = {
         title: '保存图片',

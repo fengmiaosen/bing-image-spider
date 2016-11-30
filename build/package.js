@@ -20,7 +20,7 @@ function getElectronVersion () {
 }
 
 const pkgConfig = {
-    dir: config.build.outputRoot,
+    dir: config.build.sourceRoot,
     out: config.build.releasesRoot,
     name: devManifest.name,
     version: getElectronVersion(),

@@ -8,9 +8,9 @@
     "start": "cross-env NODE_ENV=prod electron .",
     "dev": "cross-env  NODE_ENV=dev electron .",
     "dev_spider": "cross-env node build/spider_dev.js",
-    "package": "node build/package.js",
-    "package:osx": "node build/package.js --platform=darwin --arch=x64",
-    "package:win": "node build/package.js --platform=win32"
+    "package": "cross-env node build/package.js",
+    "package:osx": "cross-env node build/package.js --platform=darwin --arch=x64",
+    "package:win": "cross-env node build/package.js --platform=win32"
   },
   "author": "fengmiaosen <fengmiaosen@gmail.com> (https://fengmiaosen.github.io/)",
   "license": "ISC",

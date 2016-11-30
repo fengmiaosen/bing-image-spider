@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>bing spider</title>
 
-    <link rel="stylesheet"  href="src/lib/normalize.css">
-    <link rel="stylesheet" href="src/lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="src/css/render.css">
+    <link rel="stylesheet"  href="lib/normalize.css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/render.css">
 
     <script type="text/javascript">
-        //  渲染进程中使用nodeRequire来替代调用electron的API
-        // 这样就可以使用require来调用AMD、CMD等模块
+        //  渲染页面进程中使用nodeRequire来替代require调用electron的API，
+        // 这样就不会影响渲染页面中使用require来调用AMD、CMD等模块，否则jQuery没法使用
         window.nodeRequire = require;
         delete window.require;
         delete window.exports;
@@ -51,7 +51,7 @@
     </div>
 
     <script type="text/javascript">
-        nodeRequire('./src/render/mainRender.js');
+        nodeRequire('./render/mainRender.js');
     </script>
 </body>
 </html>

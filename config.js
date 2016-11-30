@@ -4,6 +4,8 @@
 let path = require('path');
 
 module.exports = {
+    name: 'bing-image-spider',
+    tmp: path.resolve(__dirname, 'tmp'),
     build: {
         // The directory which will contained packaged releases and installers
         // for various operation systems.
@@ -11,7 +13,7 @@ module.exports = {
 
         // The target directory for your app's compiled assets. Must be an absolute path.
         // This is the directory which will contain a runnable electron app.
-        outputRoot: path.resolve(__dirname, 'dist')
+        sourceRoot: path.resolve(__dirname, 'src')
     },
     release: {
         // The Electron version to use for packaged releases. If blank, it defaults

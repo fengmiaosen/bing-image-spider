@@ -4,14 +4,13 @@
 const electron = require('electron');
 const path = require('path');
 const url = require('url');
-
-const {app, BrowserWindow} = electron;
 const ipcMain = require('./src/main/ipcMain');
+const {app, BrowserWindow} = electron;
+const winWidth = 1024;
+const winHeight = 768;
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+// 保存一个浏览器窗口全局对象
 let mainWindow = null;
-const winWidth = 1024, winHeight = 768;
 
 function createWindow () {
     mainWindow = new BrowserWindow({
@@ -26,7 +25,7 @@ function createWindow () {
 
     // 加载app渲染页面
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'index.html'),
+        pathname: path.join(__dirname, 'src/index.html'),
         protocol: 'file:',
         slashes: true
     }));
@@ -50,12 +49,10 @@ function createWindow () {
     ipcMain.setIpc(mainWindow);
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+// electron初始化完毕，创建浏览器窗口
 app.on('ready', createWindow);
 
-// Quit when all windows are closed.
+// 所有窗口被关闭
 app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
@@ -71,6 +68,3 @@ app.on('activate', () => {
         createWindow()
     }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
