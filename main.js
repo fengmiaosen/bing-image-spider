@@ -12,7 +12,7 @@ const winHeight = 768;
 // 保存一个浏览器窗口全局对象
 let mainWindow = null;
 
-function createWindow () {
+let createWindow = function() {
     mainWindow = new BrowserWindow({
         width: winWidth,
         height: winHeight,
@@ -47,7 +47,7 @@ function createWindow () {
 
     // 注册主进程和渲染进程的交互事件
     ipcMain.setIpc(mainWindow);
-}
+};
 
 // electron初始化完毕，创建浏览器窗口
 app.on('ready', createWindow);

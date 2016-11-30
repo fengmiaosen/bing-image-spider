@@ -9,7 +9,7 @@ const parse_content = require('./parse_content');
 const temp = require('../../config').tmp;
 
 const source = 'cn';
-const filePrefix = source + 'cn_bing';
+const filePrefix = source + '_bing';
 
 function get(content, callback) {
     // 网页内容解析匹配背景大图url
